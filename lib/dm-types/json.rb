@@ -19,14 +19,15 @@ module DataMapper
       end
 
       def load(value)
-        if value.nil?
-          nil
+        if value.nil? || value_loaded?(value)
+          value
         elsif value.is_a?(::String)
-          typecast_to_primitive(value)
+          typecast(value)
         else
           raise ArgumentError.new("+value+ of a property of JSON type must be nil or a String")
         end
       end
+
 
       def dump(value)
         if value.nil? || value.is_a?(::String)
